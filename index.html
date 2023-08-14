@@ -22,7 +22,7 @@
     </div>
 
     <script>
-      const socket = new WebSocket("ws://localhost:3000");
+      const socket = new WebSocket("ws://rzyk-chat.netlify.app");
 
       socket.addEventListener("message", (event) => {
         const newData = JSON.parse(event.data);
