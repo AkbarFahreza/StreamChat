@@ -1,0 +1,8 @@
+#re-message {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: row;
+}
+#author-name {
+  margin-right: 5px;
+}

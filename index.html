@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple CRUD App with Auto Deletion</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <!-- <table id="dataTable">
+      <tr>
+        <th></th>
+      </tr>
+    </table> -->
+    <div id="re-message"></div>
+    <div id="input-msg">
+      <input
+        type="text"
+        id="nameInput"
+        placeholder="Name"
+        onkeydown="handleKeyDown(event)"
+      />
+      <button onclick="createEntry()">Add Entry</button>
+    </div>
+
+    <script>
+      const socket = new WebSocket("ws://localhost:3000");
+
+      socket.addEventListener("message", (event) => {
+        const newData = JSON.parse(event.data);
+        updateTable(newData);
+      });
+
+      function createEntry() {
+        const name = document.getElementById("nameInput").value;
+
+        if (name.trim() !== "") {
+          const entry = { name };
+          socket.send(JSON.stringify(entry));
+          document.getElementById("nameInput").value = "";
+        }
+      }
+      function handleKeyDown(event) {
+        if (event.keyCode === 13) {
+          // Enter key
+          createEntry();
+        }
+      }
+      function updateTable(data) {
+        const messageContainer = document.getElementById("re-message");
+        const messageText = data
+          .map(
+            (entry) => `<div id="author-name">Reza</div>
+      <div id="message">${entry.name}</div>`
+          )
+          .join("");
+        messageContainer.innerHTML = messageText;
+      }
+
+      updateTable([]); // Initial empty data
+    </script>
+  </body>
+</html>
